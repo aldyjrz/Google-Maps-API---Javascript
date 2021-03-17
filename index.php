@@ -1,130 +1,188 @@
 <?php
 include 'config/database.php';
 
- 
-if(isset($_GET['gudang'])){
+
+if (isset($_GET['gudang'])) {
   $gudang = $_GET['gudang'];
-  }else{
-    $gudang = 'ALL';
- } 
-echo $gudang;
-  
-if(isset($_POST['no_order'])){
-  $no_order = $_POST['no_order'];
-  }else{
-    $no_order = 'ALL';
-  } 
+} else {
+  $gudang = 'ALL';
+}
+
+if (isset($_GET['no_order'])) {
+  $no_order = $_GET['no_order'];
+} else {
+  $no_order = 'ALL';
+}
 include "koneksinomkot.php";
 ?>
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-  <meta charset="utf-8">
-  <title>Fleet Monitor Indoarsip</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/main.css">
+<?php
+include "template/head.php";
 
 
-</head>
+?>
+
+<?php
+?>
+<!-- Start Sidebar -->
+<nav class="navbar navbar-expand-lg fixed-top  navbar-dark bg-dark">
+
+  <a class="navbar-brand" href="#">Fleet Monitor</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <span style='color:white;' class='mr-3'>Administrator</span>
+      <a href="#" class="btn btn-outline-danger">Logout</a>
+
+    </form>
+
+  </div>
+
+</nav>
+
 
 <body>
-  <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="">Fleet Monitor</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
-  </header>
-  <main class="container">
+  <main class="container ">
     <div class="row">
       <div class="col-md-12">
         <br>
         <div class="card">
-        
-        <form action="/fleet-monitor/index.php?gudang=".$gudang method="GET">
-              <div class="card">
-                 
-                <label class="col-md-6 col-form-label">KODE GUDANG*</label>
-                <div class="col-md-6">
-                  <select class="form-control" name='gudang' id="gudang" value='<?=$_POST['gudang'] ?>'> 
+
+          <form action="/fleet-monitor/index.php" method="GET">
+            <div class="card">
+
+              <label class="col-md-6 col-form-label">KODE GUDANG*</label>
+              <div class="col-md-6">
+                <select class="form-control" name='gudang' id="gudang" ?>'>
                   <option value="all">SHOW ALL</option>
-                    <option value="KRW">KARAWANG</option>
-                    <option value="SBY">SURABAYA</option>
-                    <option value="BDG">BANDUNG</option>
-                    <option value="SMG">SEMARANG</option>
-                    <option value="MKS">MAKASSAR</option>
-                    <option value="KLT">KLATEN</option>
-                    <option value="MDN">MEDAN</option>
+                  <option value="KRW">KARAWANG</option>
+                  <option value="SBY">SURABAYA</option>
+                  <option value="BDG">BANDUNG</option>
+                  <option value="SMG">SEMARANG</option>
+                  <option value="MKS">MAKASSAR</option>
+                  <option value="KLT">KLATEN</option>
+                  <option value="MDN">MEDAN</option>
 
-                   
-                  </select>
 
-                  <button class="btn btn-info mb-3 mt-3">CARI LOKASI</button>
-                </div>
-                <label class="col-md-6 col-form-label">Berdasarkan No Order</label>
-                <div class="col-md-6">
-                  <select class="form-control" name='no_order' id="no_order">
-                    <option value="all" >SHOW ALL</option>
+                </select>
 
-                    <?php
-                 if(!isset($gudang) || $gudang == 'all'){
-                 
-                    $log = mysqli_query($con, "select a.no_order as no_order, a.lati as lati, a.longi as longi from tbl_drivergps a JOIN wmt_order_h b ON a.no_order = b.no_order                     where b.read_status ='expedisi/plg' AND b.kodgud='$gudang' and recmod > '2020-01-01' group by no_order");
-                   
-                 }else{
-                  $log = mysqli_query($con, "select a.no_order as no_order, a.lati as lati, a.longi as longi from tbl_drivergps a JOIN wmt_order_h b ON a.no_order = b.no_order where b.read_status ='expedisi/plg' and recmod > '2020-01-01' group by no_order");
-
-                 }
-                    while ($data = mysqli_fetch_assoc($log)) {
-                 
-
-                      $gd = $data['no_order'];
- 
-
-                    ?>
-
-                      <option value="<?php echo $gd ?>"> <?php echo $gd ?></option>
-
-                    <?php } ?>
-
-                  </select>
-
-                  <button class="btn btn-info mb-3 mt-3">CARI LOKASI</button>
-                </div>
-                
+                <button class="btn btn-info mb-3 mt-3">CARI LOKASI</button>
               </div>
-          </div>
-          </form>
+              <label class="col-md-6 col-form-label">Berdasarkan No Order</label>
+              <div class="col-md-6">
+                <select class="form-control" name='no_order' id="no_order" value="<?php echo $_GET['no_order'] ?>">
+                  <option value="all">SHOW ALL</option>
+
+                  <?php
+
+                  // if ($gudang != 'all' && $no_order != 'all') {
+                  //   $marker = mysqli_query($con, "select * from wmt_order_h where read_status != 'selesai' and kodgud='$gudang' and  no_order='$no_order' and recmod > '2021-01-01';") or die(mysqli_error($con));
+                  // } else if ($gudang != 'all' && $no_order == 'all') {
+                  //   $marker = mysqli_query($con, "select * from wmt_order_h where read_status != 'selesai' and kodgud='$gudang' and recmod > '2021-01-01';") or die(mysqli_error($con));
+                  // } else if ($gudang == 'all' && $no_order != 'all') {
+                  //   $marker = mysqli_query($con, "select * from wmt_order_h where read_status != 'selesai' and no_order = '$no_order' and recmod > '2021-01-01';") or die(mysqli_error($con));
+                  // } else {
+                  //   $marker = mysqli_query($con, "select * from wmt_order_h where read_status != 'selesai' and  recmod > '2021-01-01';") or die(mysqli_error($con));
+                  // }
+                  if ($gudang == 'all') {
+                    $marker =  mysqli_query($koneksi_1, "SELECT
+   
+                    `h`.`kodgud`      AS `kodgud`,
+                    `d`.`no_order`    AS `no_order`,
+                    `d`.`KODPLG`      AS `kodplg`,
+                    `d`.`layanan`     AS `layanan`,
+                    `h`.`idtransaksi` AS `idtransaksi`,
+                    `h`.`no_mobil`    AS `no_mobil`,
+                    `h`.`nikdriver`   AS `nikdriver`,
+                    `h`.`recmod`      AS `recmod`,
+                     `d`.`selesai`      AS `selesai`
+                  FROM  `jadwal_d` `d`
+                     JOIN `jadwal_h` `h`
+                       ON  `d`.`idtransaksi` = `h`.`idtransaksi` 
+                       WHERE h.recmod >  DATE(CURRENT_DATE() )AND d.selesai  != 'ya'  GROUP BY h.idtransaksi ");
+                  } else if ($gudang != 'all') {
+                    $marker =  mysqli_query($koneksi_1, "SELECT
+   
+                    `h`.`kodgud`      AS `kodgud`,
+                    `d`.`no_order`    AS `no_order`,
+                    `d`.`KODPLG`      AS `kodplg`,
+                    `d`.`layanan`     AS `layanan`,
+                    `h`.`idtransaksi` AS `idtransaksi`,
+                    `h`.`no_mobil`    AS `no_mobil`,
+                    `h`.`nikdriver`   AS `nikdriver`,
+                    `h`.`recmod`      AS `recmod`,
+                     `d`.`selesai`      AS `selesai`
+                  FROM  `jadwal_d` `d`
+                     JOIN `jadwal_h` `h`
+                       ON  `d`.`idtransaksi` = `h`.`idtransaksi` 
+                       WHERE h.recmod  > DATE(CURRENT_DATE()) AND d.selesai != 'ya' GROUP BY h.idtransaksi ");
+                  }
+                  if (mysqli_num_rows($marker) < 1) {
+                    echo "<script>alert('tidak ada order aktif');</script>";
+                  }
+
+                  while ($data = mysqli_fetch_assoc($marker)) {
+
+
+                    $order = $data['no_order'];
+                    $idtrans = $data['idtransaksi'];
+                    $plat = $data['no_mobil'];
+
+                  ?>
+
+                    <option value="<?php echo $order ?>"> <?php echo "$order - $idtrans - $plat"; ?></option>
+
+                  <?php } ?>
+
+                </select>
+
+                <button class="btn btn-info mb-3 mt-3">CARI LOKASI</button>
+              </div>
+
+            </div>
         </div>
+        </form>
       </div>
-      <span id="error"></span>
-    </div>
     </div>
     <div class="card">
       <div class="card-header">
         <div id="map"></div>
       </div>
+
+    </div>
+    </div>
     </div>
   </main>
 
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="style.css">
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9cC9fl_RsrvMZj5v_Sa4W5iSj8C7QZ2Y&callback=initMap"> </script>
 
 <script>
- var marker;
+  var marker;
 
   var map;
- 
+
   //inisialisasi awal google maps
-  function initMap() { 
+  function initMap() {
     // set geolocation dan lokasi terakhir
     var x = navigator.geolocation;
     x.getCurrentPosition(success, failure);
@@ -153,81 +211,143 @@ include "koneksinomkot.php";
 
     }
 
- 
 
-  } 
- 
- 
-/////////////////LOOPING MARKER DRIVER///////////////////
-async function updateMarker() {
-
-
-  <?php
-                 if(!isset($gudang) || $gudang == 'all'){
-    
-                  $marker = mysqli_query($con, "select * from wmt_order_h where status != 'selesai' and  recmod > '2021-01-01';");
-
-                 }else{
-                  $marker = mysqli_query($con, "select * from wmt_order_h where status != 'selesai' and kodgud='$gudang' and  recmod > '2021-01-01';");
-
-                 }
- while($data = mysqli_fetch_array($marker)){
-
-    $latitude = $data['lati'];
-    $longi = $data['longi'];
-    $no_order = $data['no_order'];?>
-
-    
-    addMarker(<?php echo $latitude?>, <?php echo $longi?>, '<?php echo $no_order?>'); 
-
- 
-<?php 
- }
-?>
-}
- 
-  function addMarker(lat, lng, info) {
-
-    var coords = new google.maps.LatLng(lat, lng);
-
-    //init marker sesuai looping posisi kordinat
-    marker = new google.maps.Marker({
-      position: coords,
-      title: info,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillOpacity: 1,
-        strokeWeight: 2,
-        fillColor: '#5384ED',
-        strokeColor: '#ffffff',
-      }
-
-    });
-
-    //tambah listener marker onClick
-    google.maps.event.addListener(marker, 'click', function() {
-      var infowindow;
-      //cek info windows ada apa  kalo ada dikosongin dulu
-      if (infowindow) {
-        infowindow.setMap(null);
-        infowindow = null;
-      }
-
-      //init infowindow content
-     infowindow = new google.maps.InfoWindow({
-        content: info,
-        position: coords,
-        map: map
-      });
-    });
-
-
-    //MENAMPILKAN MARKER KEDALAM MAP
-    marker.setMap(map);
 
   }
-  
+
+
+  /////////////////LOOPING MARKER DRIVER///////////////////
+  async function updateMarker() {
+
+
+    <?php
+    if (!isset($_GET['gudang'])) {
+      $gudang = 'all';
+    }
+    if (!isset($_GET['no_order'])) {
+      $no_order = 'all';
+    }
+    ?>
+    $('#gudang').val('<?php echo $gudang ?>').prop('selected', true);
+    $('#no_order').val('<?php echo $no_order ?>').prop('selected', true);
+
+
+
+    <?php
+
+    if ($no_order == 'all') {
+      $marker =  mysqli_query($koneksi_1, "SELECT
+ 
+                  `h`.`kodgud`      AS `kodgud`,
+                  `d`.`no_order`    AS `no_order`,
+                  `d`.`KODPLG`      AS `kodplg`,
+                  `d`.`layanan`     AS `layanan`,
+                  `h`.`idtransaksi` AS `idtransaksi`,
+                  `h`.`no_mobil`    AS `no_mobil`,
+                  `h`.`nikdriver`   AS `nikdriver`,
+                  `h`.`recmod`      AS `recmod`,
+                   `d`.`selesai`      AS `selesai`
+                FROM  `jadwal_d` `d`
+                   JOIN `jadwal_h` `h`
+                     ON  `d`.`idtransaksi` = `h`.`idtransaksi` 
+                     WHERE h.recmod  > DATE(CURRENT_DATE()) and  d.selesai != 'ya' GROUP BY h.idtransaksi ");
+    } else  if ($gudang != "all" && $no_order != 'all') {
+      $q = "SELECT  `h`.`kodgud`      AS `kodgud`,
+      `d`.`no_order`    AS `no_order`,
+      `d`.`KODPLG`      AS `kodplg`,
+      `d`.`layanan`     AS `layanan`,
+      `h`.`idtransaksi` AS `idtransaksi`,
+      `h`.`no_mobil`    AS `no_mobil`,
+      `h`.`nikdriver`   AS `nikdriver`,
+      `h`.`recmod`      AS `recmod`,
+       `d`.`selesai`      AS `selesai`
+    FROM  `jadwal_d` `d`
+       JOIN `jadwal_h` `h`
+         ON  `d`.`idtransaksi` = `h`.`idtransaksi` 
+         WHERE d.no_order = '$no_order' AND h.recmod  > DATE(CURRENT_DATE()) and d.selesai != 'ya' GROUP BY h.idtransaksi ";
+
+      $marker =  mysqli_query($koneksi_1, $q);
+    }
+
+    while ($data = mysqli_fetch_assoc($marker)) {
+
+      $order =  $data['no_order'];
+      $nik = $data['nikdriver'];
+      $q =  "SELECT * from tbl_drivergps where no_order = '$order'";
+
+      $e = mysqli_query($con, $q);
+      $d = mysqli_fetch_array($e);
+      $latitude = $d['lati'];
+      $longitude = $d['longi'];
+      $no_order = $d['no_order'];
+      $qq =  "SELECT * FROM `login`  WHERE `nik` =   '$nik'";
+
+      $gg = mysqli_query($koneksi_1, $qq);
+      $ee = mysqli_fetch_array($gg);
+      $nama = $ee['nama_lengkap'];
+      $plat = $data['no_mobil'];
+      if ($latitude != '' || $longitude != '') {
+    ?>
+
+        addMarker(<?php echo $latitude ?>, <?php echo $longitude ?>, '<?php echo $no_order  ?>\n<?php echo  $nama ?>\n<?php echo  $plat ?>');
+
+
+    <?php
+      }
+    }
+
+
+    ?>
+
+
+    function addMarker(lat, lng, info) {
+
+      var coords = new google.maps.LatLng(lat, lng);
+
+      //init marker sesuai looping posisi kordinat
+      marker = new google.maps.Marker({
+        position: coords,
+        title: info,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 10,
+          fillOpacity: 1,
+          strokeWeight: 2,
+          fillColor: '#5384ED',
+          strokeColor: '#ffffff',
+        }
+
+      });
+
+      //tambah listener marker onClick
+      google.maps.event.addListener(marker, 'click', function() {
+        var infowindow;
+        //cek info windows ada apa  kalo ada dikosongin dulu
+        if (infowindow) {
+          infowindow.setMap(null);
+          infowindow = null;
+        }
+
+        //init infowindow content
+        infowindow = new google.maps.InfoWindow({
+          content: info,
+          position: coords,
+          map: map
+        });
+      });
+
+
+      //MENAMPILKAN MARKER KEDALAM MAP
+      marker.setMap(map);
+
+    }
+
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+  }
 </script>
 
 </html>
