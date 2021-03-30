@@ -1,434 +1,247 @@
 <?php
-include 'config/database.php';
-
-
-if (isset($_GET['gudang'])) {
-  $gudang = $_GET['gudang'];
-} else {
-  $gudang = 'ALL';
-}
-
-if (isset($_GET['no_order'])) {
-  $no_order = $_GET['no_order'];
-} else {
-  $no_order = 'ALL';
-}
-if ($gudang == 'KRW') {
-  $hostdb = "192.168.200.33";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-} elseif ($gudang == 'BDG') {
-  $hostdb = "192.168.200.35";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-} elseif ($gudang == 'SMG') {
-  $hostdb = "192.168.200.37";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-} elseif ($gudang == 'KLT') {
-  $hostdb = "192.168.200.38";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-} elseif ($gudang == 'SBY') {
-  $hostdb = "192.168.200.34";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-} elseif ($gudang == 'MKS') {
-  $hostdb = "192.168.200.36";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-} elseif ($gudang == 'MDN') {
-  $hostdb = "192.168.200.39";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-} else {
-  $hostdb = "192.168.200.33";
-  $userdb = "indoarsip";
-  $passworddb = "P@ssw0rd";
-  $db = 'dbarsip';
-}
-
-$koneksi_1 = mysqli_connect($hostdb, $userdb, $passworddb, 'dbarsip') or die("koneksi gagal " . mysqli_connect_error());
+session_start();
 ?>
+
 <!DOCTYPE html>
-<html>
-<?php
-include "template/head.php";
+<html lang="en">
 
-echo "AAAAA";
-?>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Indoarsip | Dashboard</title>
 
-<?php
-?>
-<!-- Start Sidebar -->
-<nav class="navbar navbar-expand-lg fixed-top  navbar-dark bg-dark">
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+</head>
 
-  <a class="navbar-brand" href="#">Fleet Monitor</a>
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top  ">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="index.php" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Contact</a>
+        </li>
+      </ul>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
 
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-warning navbar-badge">15</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-item dropdown-header">15 Notifications</span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-envelope mr-2"></i> 4 new messages
+              <span class="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-users mr-2"></i> 8 friend requests
+              <span class="float-right text-muted text-sm">12 hours</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-file mr-2"></i> 3 new reports
+              <span class="float-right text-muted text-sm">2 days</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          </div>
+        </li>
 
+      </ul>
+    </nav>
+    <!-- /.navbar -->
 
-    </ul>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="index3.html" class="brand-link">
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Indoarsip</span>
+      </a>
 
-    <form class="form-inline my-2 my-lg-0">
-      <span style='color:white;' class='mr-3'>Administrator</span>
-      <a href="#" class="btn btn-outline-danger">Logout</a>
-
-    </form>
-
-  </div>
-
-</nav>
-
-
-<body>
-  <main class="container ">
-    <div class="row">
-      <div class="col-md-12">
-        <br>
-        <div class="card">
-
-          <form action="/fleet-monitor/index.php" method="get">
-            <div class="card">
-
-              <label class="col-md-6 col-form-label">KODE GUDANG*</label>
-              <div class="col-md-6">
-                <select class="form-control" name='gudang' id="gudang" ?>'>
-                  <option value="KRW">KARAWANG</option>
-                  <option value="SBY">SURABAYA</option>
-                  <option value="BDG">BANDUNG</option>
-                  <option value="SMG">SEMARANG</option>
-                  <option value="MKS">MAKASSAR</option>
-                  <option value="KLT">KLATEN</option>
-                  <option value="MDN">MEDAN</option>
-
-
-                </select>
-
-                <button class="btn btn-info mb-3 mt-3">CARI LOKASI</button>
-              </div>
-              <label class="col-md-6 col-form-label">Berdasarkan No Order</label>
-              <div class="col-md-6">
-                <select class="form-control" name='no_order' id="no_order" value="<?php echo $_GET['no_order'] ?>">
-                  <option value="all">SHOW ALL</option>
-
-                  <?php
-                  echo $dat[0];
-                  if ($gudang != 'all') {
-                    $marker =  mysqli_query($koneksi_1, "SELECT
-   
-                    `h`.`kodgud`      AS `kodgud`,
-                    `d`.`no_order`    AS `no_order`,
-                    `d`.`KODPLG`      AS `kodplg`,
-                    `d`.`layanan`     AS `layanan`,
-                    `h`.`idtransaksi` AS `idtransaksi`,
-                    `h`.`no_mobil`    AS `no_mobil`,
-                    `h`.`nikdriver`   AS `nikdriver`,
-                    `h`.`recmod`      AS `recmod`, 
-                     `d`.`selesai`      AS `selesai`
-                  FROM  `jadwal_d` `d`
-                     JOIN `jadwal_h` `h`
-                       ON  `d`.`idtransaksi` = `h`.`idtransaksi` 
-                       WHERE d.tgl_kirim =  CURRENT_DATE()  AND d.selesai  IS NULL  GROUP BY h.idtransaksi ") or die(mysqli_error($koneksi_1));
-                  }
-
-                  while ($data = mysqli_fetch_array($marker)) {
-                    $getcoor = mysqli_query($con, "SELECT * from wmt_order_h where no_order ='$data[no_order]'") or die(mysqli_error($con));
-                    $get = mysqli_fetch_assoc($getcoor);
-                    $order = $data['no_order'];
-                    $idtrans = $data['idtransaksi'];
-                    $plat = $data['no_mobil'];
-
-                  ?>
-
-                    <option value="<?php echo $order ?>"> <?php echo "  $idtrans - $plat  "; ?></option>
-
-                  <?php } ?>
-
-                </select>
-
-                <button class="btn btn-info mb-3 mt-3">CARI LOKASI</button>
-                <?php
-
-
-
-                echo "Destination :" . $_GET['lat'] . "<br>";
-                ?>
-                <hr>
-
-                <span id="distance" class='distance'> </span>
-                <span id="estimasi" class='estimasi'> </span>
-
-
-              </div>
-
-            </div>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Alexander Pierce</a>
+          </div>
         </div>
-        </form>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div id="map"></div>
-      </div>
 
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="./index.php?page=dashboard" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Fleet Monitor </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./index.php?page=manage" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Fleet Management </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./index3.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Dashboard v3</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Dashboard</h1>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard v1</li>
+              </ol>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <section class="content">
+
+        <!-- Small boxes (Stat box) -->
+        <?php
+        if (isset($_GET['page'])) {
+          $page = $_GET['page'];
+          if ($page == 'dashboard') {
+            include_once './monitor.php';
+          } else  if ($page == 'manage') {
+            include_once './manage.php';
+          } else {
+            include_once './monitor.php';
+          }
+        } else {
+          include_once './monitor.php';
+        }
+
+        ?>
+      </section>
+      <!-- /.content -->
     </div>
-    </div>
-    </div>
-  </main>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <strong>Copyright &copy; 2014-2020 <a href="https://indoarsip.co.id">Indoarsip</a>.</strong> Build with love<3 <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.1.0-rc
+  </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- ChartJS -->
+  <script src="plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="plugins/sparklines/sparkline.js"></script>
+  <!-- JQVMap -->
+  <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="plugins/moment/moment.min.js"></script>
+  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.js"></script>
+  <!-- AdminLTE for demo purposes -->
 
 </body>
-<link rel="stylesheet" href="style.css">
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9cC9fl_RsrvMZj5v_Sa4W5iSj8C7QZ2Y&callback=initMap"> </script>
-
-<script>
-  var order = '<?php echo $gudang ?>';
-
-  $('#gudang option[value=' + order + ']').prop('selected', true);
-
-  var marker;
-
-  var map;
-  //inisialisasi awal google maps
-  function initMap() {
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
-
-    // set geolocation dan lokasi terakhir
-    var x = navigator.geolocation;
-    x.getCurrentPosition(success, failure);
-
-    //  get current position jika success
-    function success(position) {
-
-
-      //belum di inisialisi untuk query lokasi terakhir
-      var lastLocation = new google.maps.LatLng(-6.22574, 106.83);
-
-
-      map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
-        center: lastLocation
-
-      });
-
-      var trafficLayer = new google.maps.TrafficLayer();
-      directionsDisplay.setMap(map);
-      trafficLayer.setMap(map);
-      var order = '<?php echo $no_order ?>';
-
-      updateMarker();
-      var gd = '<?php echo $gudang ?>';
-
-      $('#gudang option[value=' + gd + ']').prop('selected', true);
-
-
-      <?php
-
-      if ($_GET['no_order'] != 'all') {
-
-        $getcoor = mysqli_query($con, "SELECT * from wmt_order_h where no_order ='$_GET[no_order]'") or die(mysqli_error($con));
-        $get = mysqli_fetch_assoc($getcoor);
-      ?>
-
-        console.log("lokasi awal " + <?php echo $get['lati'] ?>);
-
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-
-      <?php } ?>
-
-    }
-    //kondisi jika gagal mendapatkan lokasi terkini
-    function failure() {
-      console.log("failed get coords");
-
-    }
-
-
-
-  }
-
-  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    const waypts = [];
-
-
-
-    var lat = <?php echo $get['lati'] ?>;
-    var lng = <?php echo $get['longi'] ?>;
-
-    var lastLocation = new google.maps.LatLng(lat, lng);
-    console.log("lokasi awal " + lastLocation);
-    var awal = new google.maps.LatLng(-6.40008, 107.444);
-    directionsService.route({
-
-      origin: awal,
-      destination: lastLocation,
-      travelMode: 'DRIVING',
-      avoidHighways: false,
-      avoidTolls: false
-    }, function(response, status) {
-      if (status === 'OK') {
-        console.log(" status error: " + status);
-        var totalDist = 0;
-        var totalTime = 0;
-        var myroute = response.routes[0];
-        for (i = 0; i < myroute.legs.length; i++) {
-          totalDist += myroute.legs[i].distance.value;
-          totalTime += myroute.legs[i].duration.value;
-        }
-        totalDist = totalDist / 1000;
-
-        console.log(totalDist);
-        console.log(totalTime);
-        document.getElementById('distance').innerHTML = "Estimasi Jarak :" + totalDist + " KM <br>  ";
-        document.getElementById('estimasi').innerHTML = "Estimasi Waktu Tempuh : " + totalTime / 60 + " Minutes <br>  ";
-
-        directionsDisplay.setDirections(response);
-        $("#error").empty();
-        $("#error").removeClass();
-      } else {
-        $("#error").addClass("badge badge-danger");
-        $("#error").text("Tidak dapat menemukan nama lokasi, status error: " + status);
-        console.log("Tidak dapat menemukan nama lokasi, status error: " + status);
-
-      }
-    });
-  }
-
-
-  function addMarker(lat, lng, info) {
-
-    var coords = new google.maps.LatLng(lat, lng);
-
-    //init marker sesuai looping posisi kordinat
-    marker = new google.maps.Marker({
-      position: coords,
-      title: info,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillOpacity: 1,
-        strokeWeight: 2,
-        fillColor: '#5384ED',
-        strokeColor: '#ffffff',
-      }
-
-    });
-
-    //tambah listener marker onClick
-    google.maps.event.addListener(marker, 'click', function() {
-      var infowindow;
-      //cek info windows ada apa  kalo ada dikosongin dulu
-      if (infowindow) {
-        infowindow.setMap(null);
-        infowindow = null;
-      }
-
-      //init infowindow content
-      infowindow = new google.maps.InfoWindow({
-        content: info,
-        position: coords,
-        map: map
-      });
-    });
-
-
-    //MENAMPILKAN MARKER KEDALAM MAP
-    marker.setMap(map);
-
-  }
-
-  /////////////////LOOPING MARKER DRIVER///////////////////
-  async function updateMarker() {
-
-
-    <?php
-    if (!isset($_GET['gudang'])) {
-      $gudang = 'all';
-    }
-    if (!isset($_GET['no_order'])) {
-      $no_order = 'all';
-    }
-    ?>
-
-
-
-
-    <?php
-
-    if ($no_order == 'all') {
-      $marker =  mysqli_query($koneksi_1, "SELECT `h`.`kodgud` AS `kodgud` , `d`.`no_order` AS `no_order` , `d`.`KODPLG` AS `kodplg` , `d`.`layanan` AS `layanan` , `h`.`idtransaksi` AS `idtransaksi` , `h`.`no_mobil` AS `no_mobil` , `h`.`nikdriver` AS `nikdriver` , `h`.`recmod` AS `recmod` , `d`.`selesai` AS `selesai`
-      FROM `jadwal_d` `d`
-      JOIN `jadwal_h` `h` ON `d`.`idtransaksi` = `h`.`idtransaksi`
-      WHERE d.tgl_kirim = CURRENT_DATE( )
-      AND d.selesai IS NULL
-      GROUP BY h.idtransaksi");
-    } else  if ($no_order != 'all') {
-      $q = "SELECT `h`.`kodgud` AS `kodgud` , `d`.`no_order` AS `no_order` ,    `d`.`KODPLG` AS `kodplg` , `d`.`layanan` AS `layanan` , `h`.`idtransaksi` AS `idtransaksi` , `h`.`no_mobil` AS `no_mobil` , `h`.`nikdriver` AS `nikdriver` , `h`.`recmod` AS `recmod` , `d`.`selesai` AS `selesai`
-      FROM `jadwal_d` `d`
-      JOIN `jadwal_h` `h` ON `d`.`idtransaksi` = `h`.`idtransaksi`
-      WHERE d.tgl_kirim = CURRENT_DATE( )
-      AND d.selesai IS NULL AND d.no_order = '$no_order'
-      GROUP BY h.idtransaksi";
-
-      $marker =  mysqli_query($koneksi_1, $q);
-    }
-
-    while ($data = mysqli_fetch_assoc($marker)) {
-
-      $order =  $data['no_order'];
-      $nik = $data['nikdriver'];
-      $q =  "SELECT * from tbl_drivergps where no_order = '$order'";
-
-      $e = mysqli_query($con, $q);
-      $d = mysqli_fetch_array($e);
-      $latitude = $d['lati'];
-      $longitude = $d['longi'];
-      $no_order = $data['idtransaksi'];
-      $qq =  "SELECT * FROM `login`  WHERE `nik` =   '$nik'";
-
-      $gg = mysqli_query($koneksi_1, $qq);
-      $ee = mysqli_fetch_array($gg);
-      $nama = $ee['nama_lengkap'];
-      $plat = $data['no_mobil'];
-      if ($latitude != '') {
-    ?>
-
-        addMarker(<?php echo $latitude ?>, <?php echo $longitude ?>, '<?php echo $no_order  ?> - <?php echo  $nama ?> - <?php echo  $plat ?>');
-
-
-
-        $("#menu-toggle").click(function(e) {
-          e.preventDefault();
-          $("#wrapper").toggleClass("toggled");
-        });
-
-    <?php
-      }
-    }
-    ?>
-
-  }
-</script>
 
 </html>
