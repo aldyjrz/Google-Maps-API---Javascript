@@ -174,6 +174,7 @@ if (!isset($_GET['lat'])) {
       });
       var trafficLayer = new google.maps.TrafficLayer();
       directionsDisplay.setMap(map);
+      trafficLayer.setMap(map);
       <?php $getcoor = mysqli_query($con, "SELECT * from wmt_order_h where no_order ='$_GET[no_order]'") or die(mysqli_error($con));
       $get = mysqli_fetch_assoc($getcoor);
       ?>
